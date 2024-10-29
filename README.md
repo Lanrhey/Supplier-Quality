@@ -109,8 +109,13 @@ Top vendor defect qty =
 5. Raw materials has the highest defect quantity (495.9m) with Corrugate having 308.7M and Film 135.1M.
 
 ### Recommendations
- Base on the analysis, the following is recommended;
- 1. Top 3 Worst performing vendors could be replaced with new ones
- 2. Vendors supplying Plants with least defect quantity should be used for the plants with highest defect quantity.
- 3. 
+ It is unrealistic to expect that poor supplier performance can be totally prevented. Howerver based on the analysis, the following is recommended;
+ 1. Collaborate with the suppliers and create a plan to address rising downtime by re-strategizing, optimizing processes, additional training or amending new ways of operating.
+ 2. Consistently worst performing vendors should be penalised and if no changes should be replaced with alternative suppliers.
+ 3. Vendors supplying Plants with least defect quantity should be used for the Plants with highest defect quantity.
+    
+
+    
+ ### Limitations
+ 
  
