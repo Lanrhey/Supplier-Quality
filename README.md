@@ -21,7 +21,9 @@ Supplier Data: The main data used for this project is the "Supplier data" thats 
 
 ### Exploratory Data Analysis
  - Which vendors/plants are causing the greatest defect quantity?<img width="616" alt="TopVendordefect" src="https://github.com/user-attachments/assets/eab549e5-84b9-43bf-8816-3e4f686c2ecd">
+    - Avamm has the highest defect count of 29 followed by Izio and Roombo both with 28 counts. However, Yombu lead the list of suppliers with highest defects quantity of 15.1M. Avamm and Meejo tagged along with 14.7 and 14.2 respectively.
 <img width="620" alt="planttopdefects" src="https://github.com/user-attachments/assets/3d94aae5-7483-4df3-a1e7-ffc9e386dd96">
+ 
 
  - Which vendors/plants are causing the greatest downtime?
  - Is there a particular combination of material and vendor that perform    poorly?
@@ -31,7 +33,7 @@ Supplier Data: The main data used for this project is the "Supplier data" thats 
 
 ### Data Analysis
 
-I created a new date table in PowerBI to capture all dates in my data.
+First, I created a new date table in PowerBI to capture the least and maximum date period in my data.
 ```PowerBI
   Date = ADDCOLUMNS(
                     CALENDARAUTO(),
@@ -48,13 +50,50 @@ I created a new date table in PowerBI to capture all dates in my data.
 
 )
 ```
-I created a segment to know the vendors that supplied materials which caused high downtime
+Base measures were also created to here in writing other Dax measures. I created a segment to know the vendors that supplied materials which caused high downtime
 ```PowerBI
 Risk category = 
         var curven = SELECTEDVALUE(dim_vendors[Vendor])
         var totdown = CALCULATE([Total Downtime Hrs], FILTER(dim_vendors, dim_vendors[Vendor] = curven))
         RETURN
             IF(ISINSCOPE(dim_vendors[Vendor]),IF([Total Downtime Hrs] > 800, "High risk", IF([Total Downtime Hrs] <= 800 && [Total Downtime Hrs] >= 400, "Medium risk", "Low risk")))
+```
+In other to create context in my report, I created measures to calculate values for the same period previous month and year. For the previous month measure, here is the Dax code;
+```PowerBI
+Total defects LM = 
+        CALCULATE([Total Defects Quantity],PARALLELPERIOD('Date'[Date],-1,MONTH))
+```
+Alternatively for previous year;
+```PowerBI
+Total Defects LY = 
+    CALCULATE(
+        [Total Defects Quantity], 
+        SAMEPERIODLASTYEAR('Date'[Date]
+    ))
+```
+It is interesting to note also that the MOM and LY growth icon is dynamic to reflect if our value is increasing or decreasing. The dax measure used is;
+```PowerBI
+DEFECT TREND = 
+            VAR positive = "⮝"
+            VAR negative = "⮟"
+            VAR MOM = [Defects growth MOM]
+            VAR YOY = [Defects growth YOY]
+            VAR MM = IF(MOM > 0, positive, negative)
+            VAR YY = IF(YOY > 0, positive, negative)
+            RETURN
+            MM & " " & FORMAT(MOM, "0.00%") & " vs LM" & " | " & YY & " "& FORMAT(YOY, "0.00%") & " vs LY"
+```
+For the ranking of vendors, I created a numeric parameter to give users some form of control. The user can decide how many poor performing vendors they want to see (TopN). For our chart to show the number of input by the user, I wrote this dax measure;
+```PowerBI
+Top vendor defect qty = 
+            var topven = 
+                IF(ISINSCOPE(dim_vendors[Vendor]), RANKX(ALL(dim_vendors[Vendor]), [Total Defects Quantity], ,DESC))
+            var Botven = 
+                IF(ISINSCOPE(dim_vendors[Vendor]), RANKX(ALL(dim_vendors[Vendor]), [Total Defects Quantity], ,ASC))
+            VAR ranking = 
+                IF(SELECTEDVALUE(TopBottom[Value]) = "Top", topven, Botven)
+            RETURN
+                IF(ranking <= 'Top N prm'[Top N prm Value], [Total Defects Quantity] )
 ```
 
 ### Results/Finding
