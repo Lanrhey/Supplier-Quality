@@ -26,6 +26,7 @@ Supplier Data: The main data used for this project is the "Supplier data" thats 
  
 
  - Which vendors/plants are causing the greatest downtime?
+   - Avamm caused us the most downtime hours of 1165 alongside Izio(1144) and Meetz (1134). 
  - Is there a particular combination of material and vendor that perform    poorly?
  - Is there a particular combination of Vendor and plant that performs    poorly?<img width="606" alt="vendorplantcombination" src="https://github.com/user-attachments/assets/534830a9-d1f1-4308-9204-2e71b1bf4c2a">
 
@@ -97,3 +98,19 @@ Top vendor defect qty =
 ```
 
 ### Results/Finding
+1. Defect quantity keep rising compared to last year. In 2018 total Defect quantity was 1.16bn which cost £1.93M as against 1.44bn defects which cost £2.38M in 2019.
+
+2. No impact has 39.86%, Impact has 31.71% while Rejected has 28.43% of the Defects in our data.
+
+3. Meejo (14,206,469), Avamm (14,719,726) and Yombu (15,136,374) are the worst performing vendors with highest defect quantity.
+
+4. Twin Rocks(96,903,184), Charles City (99,390,908) and Hingham (100,174,656) are our poorest performing plants.
+
+5. Raw materials has the highest defect quantity (495.9m) with Corrugate having 308.7M and Film 135.1M.
+
+### Recommendations
+ Base on the analysis, the following is recommended;
+ 1. Top 3 Worst performing vendors could be replaced with new ones
+ 2. Vendors supplying Plants with least defect quantity should be used for the plants with highest defect quantity.
+ 3. 
+ 
