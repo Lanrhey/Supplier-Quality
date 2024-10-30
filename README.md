@@ -115,7 +115,5 @@ Top vendor defect qty =
  3. Vendors supplying Plants with least defect quantity should be used for the Plants with highest defect quantity.
     
 
-    
- ### Limitations
- 
+
  
